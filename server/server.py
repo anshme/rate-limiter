@@ -20,16 +20,22 @@ def home():
     return "Hello, Flask! This is the home page."
 
 
-#TODO write a function which calls pinging_the_server method -> localhost:2002/ping should be the path. How to pass a variable to /ping
+#TODO write a function which calls pinging_the_server method -> localhost:2002/ping should be the path.
+#How to pass a variable to /ping
 @app.route('/ping/<name>')
 def client_request(name):
     client_ip = request.remote_addr
     
     # Get the client's port from the 'environ' object
     client_port = request.environ.get('REMOTE_PORT')
-
-
+    current_time = datetime.now()
+    logging.info(f"{client_port} has pinged at {current_time}")
     return f"Hello, {name}! This is the home page. \nClient IP: {client_ip}, Client Port: {client_port}"
+
+
+
+
+
 
 #how to call curl -v http://localhost:2002/ping
 
