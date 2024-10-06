@@ -6,7 +6,8 @@ password = "****"
 
 if __name__ == '__main__':
     # URL of the Flask server
-    url = 'http://127.0.0.1:2002/'
+    name = "anjuman"
+    url = f'http://127.0.0.1:2002/ping/{name}'
 
     # Make a GET request to the server
     try:

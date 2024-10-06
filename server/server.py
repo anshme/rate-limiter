@@ -15,13 +15,15 @@ def pinging_the_server(whoami='Anjuman'):
 
 #TODO write a function to host the server. localhost:2002
 # Home route
-@app.route('/ping')
+@app.route('/')
 def home():
     return "Hello, Flask! This is the home page."
 
 
 #TODO write a function which calls pinging_the_server method -> localhost:2002/ping should be the path. How to pass a variable to /ping
-
+@app.route('/ping/<name>')
+def client_request(name):
+    return f"Hello, {name}! This is the home page."
 
 #how to call curl -v http://localhost:2002/ping
 
