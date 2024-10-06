@@ -1,5 +1,10 @@
 import logging
-import time
+from datetime import datetime
 
-def pinging_the_server(whoami):
-    logging.info(f"{whoami} has pinged at {time.localtime}")
+logging.basicConfig(level=logging.INFO)
+
+def pinging_the_server(whoami='Anjuman'):
+    # Get the current time
+    current_time = datetime.now()
+    logging.info(f"{whoami} has pinged at {current_time}")
+    # logging.error(f"this is an error")
