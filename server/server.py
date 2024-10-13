@@ -29,7 +29,7 @@ def client_request(name):
     # Get the client's port from the 'environ' object
     client_port = request.environ.get('REMOTE_PORT')
     current_time = datetime.now()
-    logging.info(f"{client_port} has pinged at {current_time}")
+    logging.info(f"{name} with {client_port} has pinged at {current_time}")
     return f"Hello, {name}! This is the home page. \nClient IP: {client_ip}, Client Port: {client_port}"
 
 
