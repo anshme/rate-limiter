@@ -8,3 +8,8 @@ $ tail -f server.log (to check for server.log)
 
 epoch time : Sunday, October 13, 2024 7:30:00 AM  -- > 1728804600
 epoch time : Sunday, October 13, 2024 7:31:00 AM  -- > 1728804660
+
+2024-10-13:
+->Rerouting for rate limiter middleware
+ start.py ---> rate_limiter.py --->server.py
+->rate_limiter.py
