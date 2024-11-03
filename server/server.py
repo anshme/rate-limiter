@@ -26,14 +26,10 @@ def home():
 def client_request(name):
     client_ip = request.remote_addr
     
-    # Get the client's port from the 'environ' object
     client_port = request.environ.get('REMOTE_PORT')
     current_time = datetime.now()
     logging.info(f"{name} with {client_port} has pinged at {current_time}")
-    return f"Hello, {name}! This is the home page. \nClient IP: {client_ip}, Client Port: {client_port}"
-
-
-
+    return f"Hello, {name}! This is the home page of the main server. \nClient IP: {client_ip}, Client Port: {client_port}"
 
 
 
@@ -41,4 +37,5 @@ def client_request(name):
 
 if __name__ == '__main__':
     # Set host to '0.0.0.0' to make the server publicly available
+    print("Starting the server at localhost 2002")
     app.run(host='0.0.0.0', port=2002, debug=True)
