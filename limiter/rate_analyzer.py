@@ -2,7 +2,7 @@
 from datetime import datetime
 
 
-infile = r"server.log"
+infile = r"C:\SystemDesign\rate-limiter\limiter\limiter.log"
 
 important = []
 temp =[]
@@ -23,11 +23,11 @@ with open(infile) as f:
 
 timer = {}
 for line in f:
-    if "has pinged at" in line:
+    if "has hit the rate limiter" in line:
         temp=line.split()
         time_stamp = temp[-2] + " " + temp[-1].split(".")[0]
         time_stamp_unix = get_unix_timestamp(time_stamp)
-        min_time_number = time_stamp_unix - time_stamp_unix%60
+        min_time_number = time_stamp_unix - (time_stamp_unix % 60)
         if min_time_number in timer:
             timer[min_time_number]+=1
         else:

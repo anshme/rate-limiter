@@ -2,34 +2,23 @@ import logging
 from datetime import datetime
 from flask import Flask, request
 import requests
+from bucket import Bucket
 
 app = Flask(__name__)
+SIZE = 3
+REFILL_RATE = 1
+token_bucket_rate_limiter = Bucket(SIZE, REFILL_RATE)
 
 
 logging.basicConfig(level=logging.INFO)
 
-
-def pinging_the_server(whoami='Anjuman'):
-    # Get the current time
-    current_time = datetime.now()
-    logging.info(f"{whoami} has pinged at {current_time}")
-    # logging.error(f"this is an error")
-
-#TODO write a function to host the server. localhost:2002
 # Home route
 @app.route('/')
 def home():
     return "Hello, Flask! This is the home page."
 
 
-#TODO write a function which calls pinging_the_server method -> localhost:2002/ping should be the path.
-#How to pass a variable to /ping
-@app.route('/ping/<name>')
-def client_request(name):
-
-    url = f"http://localhost:2002/ping/{name}"
-    current_time = datetime.now()
-    logging.info(f"{name} has hit the rate limiter at {current_time}")
+def call_server(url):
     try:
         response = requests.get(url)
         if response.status_code == 200:
@@ -39,6 +28,20 @@ def client_request(name):
     except requests.exceptions.RequestException as e:
         return f"Error pinging service: {e}"
 
+#How to pass a variable to /ping
+@app.route('/ping/<name>')
+def client_request(name):
+
+    url = f"http://localhost:2002/ping/{name}"
+    current_time = datetime.now()
+    logging.info(f"{name} has hit the rate limiter at {current_time}")
+    to_proceed  = token_bucket_rate_limiter.token_bucket_algo()
+    logging.info(f"Bucket size = {token_bucket_rate_limiter.get_current_bucket_status()}")
+    if to_proceed:
+        return call_server(url)
+    else:
+        return f"Url Limit Exceeded , Try after 1 min"
+    
 
 
 def is_service_running(host, port):
@@ -51,7 +54,7 @@ def is_service_running(host, port):
         return False
 
 
-#how to call curl -v http://localhost:2022/ping
+#how to call curl http://localhost:2022/ping/name
 
 if __name__ == '__main__':
     if is_service_running('localhost', '2002'):

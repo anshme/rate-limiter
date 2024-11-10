@@ -2,7 +2,7 @@
 from datetime import datetime
 
 
-infile = r"server.log"
+infile = r"C:\SystemDesign\rate-limiter\server\server.log"
 
 important = []
 temp =[]
@@ -22,6 +22,7 @@ with open(infile) as f:
     f = f.readlines()
 
 timer = {}
+print("inside server rate analyzer")
 for line in f:
     if "has pinged at" in line:
         temp=line.split()
